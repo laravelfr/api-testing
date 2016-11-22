@@ -1,0 +1,12 @@
+{
+    "name": "laravelfr/api_tests",
+    "description": "A package wich provide all you need for testing apis !",
+    "minimum-stability": "dev",
+    "license": " GPL-3.0",
+    "authors": [
+        {
+            "name": "Mathieu TUDISCO",
+            "email": "mathieu.tu@gmail.com"
+        }
+    ]
+}
