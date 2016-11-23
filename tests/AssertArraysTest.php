@@ -12,7 +12,7 @@ class AssertArraysTest extends PHPUnit_Framework_TestCase
 
     public function testAssertArrayStructureEquals()
     {
-        $array = (new JsonSerializableMixedResourcesStub)->jsonSerialize();
+        $array = (new JsonSerializableMixedResourcesStub())->jsonSerialize();
 
         $this->assertArrayStructureEquals([
             'foo',
