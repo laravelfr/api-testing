@@ -2,11 +2,29 @@
     "name": "laravelfr/api_tests",
     "description": "A package wich provide all you need for testing apis !",
     "minimum-stability": "dev",
-    "license": " GPL-3.0",
+    "license": "GPL-3.0",
     "authors": [
         {
             "name": "Mathieu TUDISCO",
-            "email": "mathieu.tu@gmail.com"
+            "email": "mathieu.tu@gmail.com",
+            "role": "Developer"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": {
+            "LaravelFr\\ApiTests\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LaravelFr\\ApiTests\\Tests": "tests/"
+        }
+    },
+    "require": {
+        "php": ">=5.5",
+        "laravel/framework":"~5.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.8|^5.0"
+    }
 }
