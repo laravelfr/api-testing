@@ -1,16 +1,16 @@
 <?php
 
-namespace LaravelFr\Tests;
+namespace LaravelFr\ApiTesting\Tests;
 
-use JsonSerializableMixedResourcesStub;
-use LaravelFr\ApiTests\AssertJsonResponse;
+use LaravelFr\ApiTesting\Tests\Stubs\JsonSerializableMixedResourcesStub;
+use LaravelFr\ApiTesting\AssertJsonResponse;
 use PHPUnit_Framework_TestCase;
 
-class AssertArraysTest extends PHPUnit_Framework_TestCase
+class AssertJsonResponseTest extends PHPUnit_Framework_TestCase
 {
     use AssertJsonResponse;
 
-    public function testAssertArrayStructureEquals()
+    public function testSeeJsonStructureEquals()
     {
         $this->response = new \Illuminate\Http\Response(new JsonSerializableMixedResourcesStub);
 
@@ -35,6 +35,5 @@ class AssertArraysTest extends PHPUnit_Framework_TestCase
             $this->jsonResponse('foobar')
         );
         $this->assertEquals('bar', $this->jsonResponse('foobar.foobar_bar'));
-
     }
 }

@@ -1,5 +1,5 @@
 {
-    "name": "laravelfr/api_tests",
+    "name": "laravelfr/api_testing",
     "description": "A package wich provide all you need for testing apis !",
     "minimum-stability": "dev",
     "license": "GPL-3.0",
@@ -12,12 +12,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "LaravelFr\\ApiTests\\": "src/"
+            "LaravelFr\\ApiTesting\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "LaravelFr\\ApiTests\\Tests": "tests/"
+            "LaravelFr\\ApiTesting\\Tests\\": "tests/"
         }
     },
     "require": {

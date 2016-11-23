@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelFr\ApiTests;
+namespace LaravelFr\ApiTesting;
 
 use Illuminate\Foundation\Testing\Concerns\MakesHttpRequests;
 

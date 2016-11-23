@@ -1,9 +1,9 @@
 <?php
 
-namespace LaravelFr\Tests;
+namespace LaravelFr\ApiTesting\Tests;
 
-use JsonSerializableMixedResourcesStub;
-use LaravelFr\ApiTests\AssertArrays;
+use LaravelFr\ApiTesting\AssertArrays;
+use LaravelFr\ApiTesting\Tests\Stubs\JsonSerializableMixedResourcesStub;
 use PHPUnit_Framework_TestCase;
 
 class AssertArraysTest extends PHPUnit_Framework_TestCase
