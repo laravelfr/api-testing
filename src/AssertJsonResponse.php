@@ -11,8 +11,8 @@ trait AssertJsonResponse
     /**
      * Assert that the JSON response has exactly the given structure.
      *
-     * @param  array $structure
-     * @param  array|null $responseData
+     * @param array      $structure
+     * @param array|null $responseData
      *
      * @return $this
      */
@@ -28,7 +28,7 @@ trait AssertJsonResponse
     /**
      * Return the json response or a part of it as an array.
      *
-     * @param  string $key
+     * @param string $key
      *
      * @return mixed
      */

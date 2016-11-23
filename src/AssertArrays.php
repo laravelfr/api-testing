@@ -7,8 +7,8 @@ trait AssertArrays
     /**
      * Assert that the given array has exactly the given structure.
      *
-     * @param  array $structure
-     * @param  array $array
+     * @param array $structure
+     * @param array $array
      *
      * @return $this
      */
