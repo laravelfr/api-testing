@@ -4,6 +4,22 @@ namespace LaravelFr\ApiTesting;
 
 trait AssertArrays
 {
+    abstract public function assertEquals(
+        $expected,
+        $actual,
+        $message = '',
+        $delta = 0.0,
+        $maxDepth = 10,
+        $canonicalize = false,
+        $ignoreCase = false
+    );
+
+    abstract public function assertInternalType(
+        $expected,
+        $actual,
+        $message = ''
+    );
+
     /**
      * Assert that the given array has exactly the given structure.
      *
