@@ -2,8 +2,10 @@
 
 namespace LaravelFr\ApiTesting\Tests;
 
+use Illuminate\Http\Response;
 use LaravelFr\ApiTesting\Tests\Stubs\JsonSerializableMixedResourcesStub;
 use LaravelFr\ApiTesting\AssertJsonResponse;
+use LaravelFr\ApiTesting\Tests\Stubs\JsonSerializableTypedResourceStub;
 use PHPUnit_Framework_TestCase;
 
 class AssertJsonResponseTest extends PHPUnit_Framework_TestCase
@@ -12,7 +14,7 @@ class AssertJsonResponseTest extends PHPUnit_Framework_TestCase
 
     public function testSeeJsonStructureEquals()
     {
-        $this->response = new \Illuminate\Http\Response(new JsonSerializableMixedResourcesStub);
+        $this->response = new Response(new JsonSerializableMixedResourcesStub);
 
         $this->seeJsonStructureEquals([
             'foo',
@@ -24,7 +26,7 @@ class AssertJsonResponseTest extends PHPUnit_Framework_TestCase
 
     public function testJsonResponse()
     {
-        $this->response = new \Illuminate\Http\Response(new JsonSerializableMixedResourcesStub);
+        $this->response = new Response(new JsonSerializableMixedResourcesStub);
 
         $this->assertEquals(
             (new JsonSerializableMixedResourcesStub)->jsonSerialize(),
@@ -35,5 +37,29 @@ class AssertJsonResponseTest extends PHPUnit_Framework_TestCase
             $this->jsonResponse('foobar')
         );
         $this->assertEquals('bar', $this->jsonResponse('foobar.foobar_bar'));
+    }
+
+    public function testSeeJsonTypedStructure()
+    {
+        $this->response = new Response(new JsonSerializableTypedResourceStub);
+
+        $this->seeJsonTypedStructure([
+            'foo' => 'string',
+            'bar' => 'integer',
+            'foobar' => 'array',
+            'baz' => 'boolean',
+            'nested_foo' => [
+                'foo' => 'string',
+                'bar' => 'integer',
+                'foobar' => 'array',
+                'baz' => 'boolean',
+                'double_nested_foo' => [
+                    'foo' => 'string',
+                    'bar' => 'integer',
+                    'foobar' => 'array',
+                    'baz' => 'boolean',
+                ],
+            ],
+        ]);
     }
 }
