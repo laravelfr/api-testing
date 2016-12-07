@@ -52,7 +52,7 @@ trait AssertJsonResponse
             return $this->seeJsonStructure($structure);
         }
 
-        if (! $responseData) {
+        if (!$responseData) {
             $responseData = json_decode($this->response->getContent(), true);
         }
 

@@ -3,10 +3,10 @@
 namespace LaravelFr\ApiTesting\Tests;
 
 use Illuminate\Http\Response;
-use LaravelFr\ApiTesting\Tests\Stubs\JsonSerializableMixedResourcesStub;
+use PHPUnit_Framework_TestCase;
 use LaravelFr\ApiTesting\AssertJsonResponse;
 use LaravelFr\ApiTesting\Tests\Stubs\JsonSerializableTypedResourceStub;
-use PHPUnit_Framework_TestCase;
+use LaravelFr\ApiTesting\Tests\Stubs\JsonSerializableMixedResourcesStub;
 
 class AssertJsonResponseTest extends PHPUnit_Framework_TestCase
 {
