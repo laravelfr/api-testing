@@ -26,20 +26,6 @@ trait AssertJsonResponse
     }
 
     /**
-     * Return the json response or a part of it as an array.
-     *
-     * @param  string $key
-     *
-     * @return mixed
-     */
-    public function jsonResponse($key = null)
-    {
-        $response = $this->decodeResponseJson();
-
-        return $key ? array_get($response, $key) : $response;
-    }
-
-    /**
      * Assert that the JSON response has a given typed structure.
      *
      * @param  array|null  $structure
@@ -73,5 +59,30 @@ trait AssertJsonResponse
         }
 
         return $this;
+    }
+
+    /**
+     * Return the json response or a part of it as an array.
+     *
+     * @param  string $key
+     *
+     * @return mixed
+     */
+    public function jsonResponse($key = null)
+    {
+        $response = $this->decodeResponseJson();
+
+        return $key ? array_get($response, $key) : $response;
+    }
+
+    public function decodeResponseJson()
+    {
+        $decodedResponse = json_decode($this->response->getContent(), true);
+
+        if (is_null($decodedResponse) || $decodedResponse === false) {
+            $this->fail('Invalid JSON was returned from the route. Perhaps an exception was thrown?');
+        }
+
+        return $decodedResponse;
     }
 }
