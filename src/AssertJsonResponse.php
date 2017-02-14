@@ -2,11 +2,9 @@
 
 namespace LaravelFr\ApiTesting;
 
-use Illuminate\Foundation\Testing\Concerns\MakesHttpRequests;
-
 trait AssertJsonResponse
 {
-    use AssertArrays, MakesHttpRequests;
+    use AssertArrays;
 
     /**
      * Assert that the JSON response has exactly the given structure.
