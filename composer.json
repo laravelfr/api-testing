@@ -1,13 +1,13 @@
 {
     "name": "laravelfr/api-testing",
-    "description": "A package wich provide all you need for testing apis !",
+    "description": "A package which provide all you need for testing apis!",
     "minimum-stability": "dev",
+    "prefer-stable": true,
     "license": "GPL-3.0",
     "authors": [
         {
             "name": "Mathieu TUDISCO",
-            "email": "mathieu.tu@gmail.com",
-            "role": "Developer"
+            "email": "dev@mathieutu.ovh"
         }
     ],
     "autoload": {
@@ -25,6 +25,8 @@
         "laravel/framework":"~5.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "^4.8|^5.0"
+        "phpunit/phpunit": "^4.8|^5.0",
+        "laravel/browser-kit-testing": "^2.0"
+
     }
 }

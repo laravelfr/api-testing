@@ -1,10 +1,16 @@
 language: php
 
-php:
-  - 5.5
-  - 5.6
-  - 7.0
-  - 7.1
+php: 7.1
+
+env:
+  - LARAVEL_VERSION=5.2.*
+  - LARAVEL_VERSION=5.5.*
+  - LARAVEL_VERSION=5.*
+
+matrix:
+  include:
+    - php: 5.5
+      env: LARAVEL_VERSION=5.2.*
 
 sudo: false
 
@@ -13,9 +19,9 @@ cache:
     - $HOME/.composer/cache
     - vendor
 
-
 install:
   - travis_retry composer self-update
+  - if [ "$LARAVEL_VERSION" != "" ]; then composer require "laravel/framework:${LARAVEL_VERSION}" --no-update; fi;
   - travis_retry composer update --no-interaction --prefer-dist
 
 script:

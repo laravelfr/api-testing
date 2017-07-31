@@ -1,19 +1,24 @@
 <?php
 
-namespace LaravelFr\ApiTesting\Tests;
+namespace LaravelFr\ApiTesting\Tests\AssertJsonResponse;
 
-use LaravelFr\ApiTesting\Tests\Stubs\JsonSerializableMixedResourcesStub;
-use LaravelFr\ApiTesting\AssertJsonResponse;
+use Illuminate\Http\Response;
 use PHPUnit_Framework_TestCase;
+use LaravelFr\ApiTesting\AssertJsonResponse;
+use Laravel\BrowserKitTesting\Concerns\MakesHttpRequests;
+use LaravelFr\ApiTesting\Tests\Stubs\JsonSerializableMixedResourcesStub;
 
-class AssertJsonResponseTest extends PHPUnit_Framework_TestCase
+class AssertJsonResponseForOldVersionAndBrowserKitTest extends PHPUnit_Framework_TestCase
 {
-    use AssertJsonResponse;
+    use AssertJsonResponse, MakesHttpRequests;
+
+    public function setUp()
+    {
+        $this->response = new Response(new JsonSerializableMixedResourcesStub);
+    }
 
     public function testSeeJsonStructureEquals()
     {
-        $this->response = new \Illuminate\Http\Response(new JsonSerializableMixedResourcesStub);
-
         $this->seeJsonStructureEquals([
             'foo',
             'baz'    => ['*' => ['bar' => ['*'], 'foo']],
@@ -24,8 +29,6 @@ class AssertJsonResponseTest extends PHPUnit_Framework_TestCase
 
     public function testJsonResponse()
     {
-        $this->response = new \Illuminate\Http\Response(new JsonSerializableMixedResourcesStub);
-
         $this->assertEquals(
             (new JsonSerializableMixedResourcesStub)->jsonSerialize(),
             $this->jsonResponse()
