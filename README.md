@@ -22,16 +22,83 @@ composer require laravelfr/api-testing
 
 Once Laravel API Testing is installed, you can extend or implement the classes and traits in this package. There are no service providers to register.
 
-Example : 
-```php
-namespace Tests;
+It works both with old testing way (Laravel <5.4 and >5.4 with BrowserKit) and with new testing way (with response object).
+- Old way: Just use  `\LaravelFr\ApiTesting\AssertArrays` and `\LaravelFr\ApiTesting\AssertJsonResponse` traits, and use directly the methods from traits.
+- New way: for `AssertJsonResponse`, you can add the trait, and directly use the methods on response object.
 
-use Illuminate\Foundation\Testing\TestCase as LaravelTestCase;
-use LaravelFr\ApiTesting\AssertArrays;
+See Tests for some examples.
 
-class TestCase extends LaravelTestCase
-{
-    use AssertArrays;
-    
-    ...
+## Available methods: 
+
+On this response example : 
 ```
+{
+   "foo": 134,
+   "foobar": {
+       "foobar_foo": "foo",
+       "foobar_bar": 212
+   },
+   "bars": [
+       {
+           "bar": true,
+           "foo": 134.212
+       },
+       {
+           "bar": false,
+           "foo": 134.212
+       },
+       {
+           "bar": false,
+           "foo": 134.212
+       }
+   ],
+   "baz": [
+       {
+           "foo": "Laravel",
+           "bar": {
+               "foo": true,
+               "bar": 134
+           }
+       },
+       {
+           "foo": "France",
+           "bar": {
+               "foo": false,
+               "bar": 212
+           }
+       }
+   ]
+}
+```
+ - `assertJsonStructureEquals`: check if it respects the **exact** structure pattern.
+ ```php
+ $response->assertJsonStructureEquals([
+     'foo',
+     'baz' => ['*' => ['bar' => ['*'], 'foo']],
+     'bars' => ['*' => ['bar', 'foo']],
+     'foobar' => ['foobar_foo', 'foobar_bar'],
+ ]);
+ ```
+ 
+ - `seeJsonTypedStructure`: check if it respects a typed pattern.
+ ```php
+ $response->seeJsonTypedStructure([
+     'foo' => 'integer',
+     'baz' => ['*' => ['bar' => 'array', 'foo' => 'string']],
+     'bars' => ['*' => ['bar' => 'boolean', 'foo' => 'float']],
+     'foobar' => ['foobar_foo' => 'string', 'foobar_bar' => 'int'],
+ ]);
+ ```
+ - `seeJsonTypedStructure`: retrieve a part of response in array format.
+ ```php
+ $response->jsonResponse('foobar.foobar_bar')); // 212
+ ```
+ ## Credits
+ - Maintenance: Mathieu TUDISCO <dev@mathieutu.ovh>,
+ - Methods: 
+    - [@mathieutu](https://github.com/mathieutu)
+    - [@welcoMattic](https://github.com/welcomattic)
+    
+ Please feel free to make PRs and add yours!
+
+
