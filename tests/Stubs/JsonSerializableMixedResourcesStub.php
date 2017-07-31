@@ -9,20 +9,40 @@ class JsonSerializableMixedResourcesStub implements JsonSerializable
     public function jsonSerialize()
     {
         return [
-            'foo'    => 'bar',
+            'foo' => 134,
             'foobar' => [
                 'foobar_foo' => 'foo',
-                'foobar_bar' => 'bar',
+                'foobar_bar' => 212,
             ],
             'bars'   => [
-                ['bar' => 'foo 0', 'foo' => 'bar 0'],
-                ['bar' => 'foo 1', 'foo' => 'bar 1'],
-                ['bar' => 'foo 2', 'foo' => 'bar 2'],
+                ['bar' => true, 'foo' => 134.212],
+                ['bar' => false, 'foo' => 134.212],
+                ['bar' => false, 'foo' => 134.212],
             ],
             'baz'    => [
-                ['foo' => 'bar 0', 'bar' => ['foo' => 'bar 0', 'bar' => 'foo 0']],
-                ['foo' => 'bar 1', 'bar' => ['foo' => 'bar 1', 'bar' => 'foo 1']],
+                ['foo' => 'bar 0', 'bar' => ['foo' => true, 'bar' => 134]],
+                ['foo' => 'bar 1', 'bar' => ['foo' => false, 'bar' => 212]],
             ],
+        ];
+    }
+
+    public function structure()
+    {
+        return [
+            'foo',
+            'baz' => ['*' => ['bar' => ['*'], 'foo']],
+            'bars' => ['*' => ['bar', 'foo']],
+            'foobar' => ['foobar_foo', 'foobar_bar'],
+        ];
+    }
+
+    public function typedStructure()
+    {
+        return [
+            'foo' => 'integer',
+            'baz' => ['*' => ['bar' => 'array', 'foo' => 'string']],
+            'bars' => ['*' => ['bar' => 'boolean', 'foo' => 'float']],
+            'foobar' => ['foobar_foo' => 'string', 'foobar_bar' => 'int'],
         ];
     }
 }

@@ -22,8 +22,12 @@ trait AssertJsonResponse
     {
         $trait = $this;
 
-        TestResponse::macro('seeJsonStructureEquals', function ($structure) use ($trait) {
-            return $trait->seeJsonStructureEquals($structure, $this->decodeResponseJson());
+        TestResponse::macro('assertJsonStructureEquals', function ($structure) use ($trait) {
+            return $trait->assertJsonStructureEquals($structure, $this->decodeResponseJson());
+        });
+
+        TestResponse::macro('seeJsonTypedStructure', function ($structure) use ($trait) {
+            return $trait->seeJsonTypedStructure($structure, $this->decodeResponseJson());
         });
 
         TestResponse::macro('jsonResponse', function ($key = null) use ($trait) {
@@ -39,13 +43,29 @@ trait AssertJsonResponse
      *
      * @return $this
      */
-    public function seeJsonStructureEquals($structure, $responseData = null)
+    public function assertJsonStructureEquals($structure, $responseData = null)
     {
         if (!$responseData) {
             $responseData = $this->decodeResponseJson();
         }
 
         return $this->assertArrayStructureEquals($structure, $responseData);
+    }
+
+    /**
+     * Assert that the JSON response has a given typed structure.
+     *
+     * @param  array $structure
+     * @param  array|null $responseData
+     * @return $this
+     */
+    public function seeJsonTypedStructure($structure, $responseData = null)
+    {
+        if (!$responseData) {
+            $responseData = $this->decodeResponseJson();
+        }
+
+        return $this->seeArrayTypedStructure($structure, $responseData);
     }
 
     /**
@@ -62,6 +82,6 @@ trait AssertJsonResponse
             $responseData = $this->decodeResponseJson();
         }
 
-        return $key ? array_get($responseData, $key) : $responseData;
+        return array_get($responseData, $key);
     }
 }

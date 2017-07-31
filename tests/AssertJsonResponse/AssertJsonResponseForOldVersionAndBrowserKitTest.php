@@ -14,29 +14,26 @@ class AssertJsonResponseForOldVersionAndBrowserKitTest extends PHPUnit_Framework
 
     public function setUp()
     {
-        $this->response = new Response(new JsonSerializableMixedResourcesStub);
+        $this->stub = new JsonSerializableMixedResourcesStub;
+        $this->response = new Response($this->stub);
     }
 
     public function testSeeJsonStructureEquals()
     {
-        $this->seeJsonStructureEquals([
-            'foo',
-            'baz'    => ['*' => ['bar' => ['*'], 'foo']],
-            'bars'   => ['*' => ['bar', 'foo']],
-            'foobar' => ['foobar_foo', 'foobar_bar'],
-        ]);
+        $this->assertJsonStructureEquals($this->stub->structure());
     }
 
     public function testJsonResponse()
     {
         $this->assertEquals(
-            (new JsonSerializableMixedResourcesStub)->jsonSerialize(),
-            $this->jsonResponse()
-        );
-        $this->assertEquals(
-            ['foobar_foo' => 'foo', 'foobar_bar' => 'bar'],
+            ['foobar_foo' => 'foo', 'foobar_bar' => 212],
             $this->jsonResponse('foobar')
         );
-        $this->assertEquals('bar', $this->jsonResponse('foobar.foobar_bar'));
+        $this->assertEquals(212, $this->jsonResponse('foobar.foobar_bar'));
+    }
+
+    public function testSeeJsonTypedStructure()
+    {
+        $this->seeJsonTypedStructure($this->stub->typedStructure());
     }
 }

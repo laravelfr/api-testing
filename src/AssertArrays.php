@@ -44,4 +44,33 @@ trait AssertArrays
 
         return $this;
     }
+
+    /**
+     * Assert that the array has a given typed structure.
+     *
+     * @param  array|null $structure
+     * @param  array $array
+     *
+     * @return $this
+     */
+    public function seeArrayTypedStructure(array $structure, array $array)
+    {
+        foreach ($structure as $key => $type) {
+            if (is_array($type) && $key === '*') {
+                PHPUnit::assertInternalType('array', $array);
+
+                foreach ($array as $arrayItem) {
+                    $this->seeArrayTypedStructure($structure['*'], $arrayItem);
+                }
+            } elseif (is_array($type) && isset($structure[$key])) {
+                if (is_array($structure[$key])) {
+                    $this->seeArrayTypedStructure($structure[$key], $array[$key]);
+                }
+            } else {
+                PHPUnit::assertInternalType($type, $array[$key]);
+            }
+        }
+
+        return $this;
+    }
 }

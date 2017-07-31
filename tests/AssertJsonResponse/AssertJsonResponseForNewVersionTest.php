@@ -2,49 +2,46 @@
 
 namespace LaravelFr\ApiTesting\Tests\AssertJsonResponse;
 
-use Illuminate\Http\Response;
-use PHPUnit_Framework_TestCase;
-use LaravelFr\ApiTesting\AssertJsonResponse;
 use Illuminate\Foundation\Testing\TestResponse;
+use Illuminate\Http\Response;
+use LaravelFr\ApiTesting\AssertJsonResponse;
 use LaravelFr\ApiTesting\Tests\Stubs\JsonSerializableMixedResourcesStub;
+use PHPUnit_Framework_TestCase;
 
 class AssertJsonResponseForNewVersionTest extends PHPUnit_Framework_TestCase
 {
     use AssertJsonResponse;
-
-    private $response;
 
     public function setUp()
     {
         if (!class_exists(TestResponse::class)) {
             $this->markTestSkipped('Not compatible with this version.');
         }
-        $this->response = new TestResponse(new Response(new JsonSerializableMixedResourcesStub));
+
+        $this->stub = new JsonSerializableMixedResourcesStub;
+        $this->response = new TestResponse(new Response($this->stub));
     }
 
     public function testSeeJsonStructureEquals()
     {
-        $this->assertTrue(TestResponse::hasMacro('seeJsonStructureEquals'));
+        $this->assertTrue(TestResponse::hasMacro('assertJsonStructureEquals'));
 
-        $this->response->seeJsonStructureEquals([
-            'foo',
-            'baz' => ['*' => ['bar' => ['*'], 'foo']],
-            'bars' => ['*' => ['bar', 'foo']],
-            'foobar' => ['foobar_foo', 'foobar_bar'],
-        ]);
+        $this->response->assertJsonStructureEquals($this->stub->structure());
+    }
+
+    public function testSeeJsonTypedStructure()
+    {
+        $this->assertTrue(TestResponse::hasMacro('seeJsonTypedStructure'));
+
+        $this->response->seeJsonTypedStructure($this->stub->typedStructure());
     }
 
     public function testJsonResponse()
     {
         $this->assertTrue(TestResponse::hasMacro('jsonResponse'));
 
-        $this->assertEquals(
-            (new JsonSerializableMixedResourcesStub)->jsonSerialize(),
-            $this->response->jsonResponse()
-        );
+        $this->assertEquals(['foobar_foo' => 'foo', 'foobar_bar' => 212], $this->response->jsonResponse('foobar'));
 
-        $this->assertEquals(['foobar_foo' => 'foo', 'foobar_bar' => 'bar'], $this->response->jsonResponse('foobar'));
-
-        $this->assertEquals('bar', $this->response->jsonResponse('foobar.foobar_bar'));
+        $this->assertEquals(212, $this->response->jsonResponse('foobar.foobar_bar'));
     }
 }
