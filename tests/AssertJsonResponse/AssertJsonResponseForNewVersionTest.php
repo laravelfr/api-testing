@@ -2,11 +2,11 @@
 
 namespace LaravelFr\ApiTesting\Tests\AssertJsonResponse;
 
-use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\Http\Response;
-use LaravelFr\ApiTesting\AssertJsonResponse;
-use LaravelFr\ApiTesting\Tests\Stubs\JsonSerializableMixedResourcesStub;
 use PHPUnit_Framework_TestCase;
+use LaravelFr\ApiTesting\AssertJsonResponse;
+use Illuminate\Foundation\Testing\TestResponse;
+use LaravelFr\ApiTesting\Tests\Stubs\JsonSerializableMixedResourcesStub;
 
 class AssertJsonResponseForNewVersionTest extends PHPUnit_Framework_TestCase
 {
